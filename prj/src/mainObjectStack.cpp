@@ -6,6 +6,9 @@
 
 void main_ObjectStack_1()
 {
+    //Error checks have been suppressed.
+
+
     ObjectStack<int, 4> stc;
     stc.Push(-1);
 
@@ -35,6 +38,9 @@ void main_ObjectStack_1()
 
 void main_ObjectStack_2()
 {
+    //Error checks have been suppressed.
+
+
     ObjectStack<int, 4> stc;
     stc.Push(-1);
 

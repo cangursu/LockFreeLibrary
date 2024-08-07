@@ -92,14 +92,14 @@ TEST(ObjectPool, Basic)
 
 
 
-static constexpr int        g_lenPoolLimited  = 16;
+static constexpr int        g_lenPoolTest  = 16;
 
-using PoolLimited = ObjectPool<ObjectTest, g_lenPoolLimited>;
+using PoolTest = ObjectPool<ObjectTest, g_lenPoolTest>;
 
 
 struct Prm
 {
-    PoolLimited *_pool      = nullptr;
+    PoolTest    *_pool      = nullptr;
     int          _idxTh     = 0;
     int          _lenPool   = 0;
     int          _lenLoop   = 0;
@@ -109,7 +109,7 @@ struct Prm
 static void *ThLimited(void *p)
 {
     Prm *prm = (Prm *)p;
-    PoolLimited *pool = prm->_pool;
+    PoolTest *pool = prm->_pool;
 
     for (int idxPush = 0, idxMaxPush = prm->_lenPool * prm->_lenLoop; idxPush < idxMaxPush; ++idxPush)
     {
@@ -136,7 +136,7 @@ static void *ThLimited(void *p)
 static void *ThUnlimited(void *p)
 {
     Prm *prm = (Prm *)p;
-    PoolLimited *pool = prm->_pool;
+    PoolTest *pool = prm->_pool;
 
     for (int idxPush = 0; idxPush < prm->_lenPool * prm->_lenLoop; ++idxPush)
     {
@@ -168,10 +168,11 @@ static void *ThUnlimited(void *p)
 
 TEST(ObjectPool, MTLimited)
 {
-    PoolLimited pool;
+    PoolTest pool;
 
     EXPECT_TRUE(pool.Init());
 
+    // Thread count is less then the size of the pool
     constexpr int lenTh =  int (pool.Size() * 3.0/ 4.0);
 
     Prm       prm[lenTh];
@@ -196,11 +197,12 @@ TEST(ObjectPool, MTLimited)
 
 TEST(ObjectPool, MTUnlimited)
 {
-    PoolLimited pool;
+    PoolTest pool;
 
     EXPECT_TRUE(pool.Init());
 
-    constexpr int lenTh =  int (g_lenPoolLimited * 4.0 / 3.0);
+    // Thread count is grater then the size of the pool
+    constexpr int lenTh =  int (pool.Size() * 2.0/*4.0 / 3.0*/);
 
     Prm       prm[lenTh];
     pthread_t th[lenTh] {};
@@ -209,7 +211,7 @@ TEST(ObjectPool, MTUnlimited)
     {
         prm[idx]._idxTh     = idx + 1;
         prm[idx]._pool      = &pool;
-        prm[idx]._lenPool   = g_lenPoolLimited;
+        prm[idx]._lenPool   = g_lenPoolTest;
         prm[idx]._lenLoop   = 32;
 
         pthread_create(&th[idx], nullptr, *ThUnlimited, (void *)(&prm[idx]));
