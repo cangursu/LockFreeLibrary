@@ -50,6 +50,8 @@ public:
     bool PushBack(TObject const &data);
     bool Pop(TObject &data);
 
+    void Reset();
+
 private:
 
     struct Slot
@@ -103,15 +105,15 @@ bool ObjectQueue<TObject, KObjectCount>::PushBack(TObject const &data)
 {
     Slot *slot = nullptr;
 
-    while (true)
+    for (int iTryCount = 0; iTryCount < 50; ++iTryCount)
     {
         std::size_t pos = _idxPush.load(std::memory_order_relaxed);
 
         slot = &_buffer[pos & _idxMod];
         std::size_t seq = slot->_seq.load(std::memory_order_acquire);
 
-         long dif = (long)seq - (long)pos;
-        if (dif == 0)
+        long dif = (long)seq - (long)pos;
+        if (0 == dif)
         {
             if (_idxPush.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))
             {
@@ -120,7 +122,11 @@ bool ObjectQueue<TObject, KObjectCount>::PushBack(TObject const &data)
                 return true;
             }
         }
-        else if (dif < 0)
+        else if (KObjectCount == dif)
+        {
+            return false;
+        }
+        else if (0 > dif)
         {
             return false;
         }
@@ -162,5 +168,16 @@ bool ObjectQueue<TObject, KObjectCount>::Pop(TObject &data)
 }
 
 
+template <typename TObject, std::size_t KObjectCount>
+void ObjectQueue<TObject, KObjectCount>::Reset()
+{
+    _idxPush.store(0, std::memory_order_relaxed);
+    _idxPop.store(0, std::memory_order_relaxed);
+
+    for (std::size_t i = 0; i != KObjectCount; i += 1)
+        _buffer[i]._seq.store(i, std::memory_order_relaxed);
+}
+
 
 #endif // __OBJECT_QUEUE_HPP__
+
