@@ -7,10 +7,11 @@
 //#define LOG std::cout
 #define LOG if(false) std::cout
 
+namespace lfl=LockFreeLib;
 
 TEST(ObjectQueue, Basic)
 {
-    ObjectQueue<int, 4> queue;
+    lfl::ObjectQueue<int, 4> queue;
     int val = 0;
     EXPECT_TRUE(queue.PushBack(-1));
 
@@ -68,15 +69,15 @@ static void ResetVal(int64_t v [g_lenTh][g_lenPush])
 
 struct Prm
 {
-    int                                 _idx = 0;
-    ObjectQueue<int64_t, g_lenQue> *   _queue = nullptr;
+    int _idx = 0;
+    lfl::ObjectQueue<int64_t, g_lenQue> *   _queue = nullptr;
 };
 
 
 static void *Produce(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
 
     for (int i = 0; i < g_lenPush; ++i )
     {
@@ -93,7 +94,7 @@ static void *Produce(void *p)
 static void *Consume(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
 
     for (int i = 0; i < g_lenPush; ++i )
     {
@@ -120,7 +121,7 @@ TEST(ObjectQueue, MT)
     srand(time(nullptr));
     ResetVal(g_val);
 
-    ObjectQueue<int64_t, g_lenQue> queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> queue;
     Prm       prm[g_lenTh];
     pthread_t thProd[g_lenTh] {};
     pthread_t thCons[g_lenTh] {};

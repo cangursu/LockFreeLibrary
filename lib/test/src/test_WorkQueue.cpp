@@ -3,10 +3,11 @@
 
 #include <gtest/gtest.h>
 
+namespace lfl=LockFreeLib;
 
 
 template <std::size_t KObjectCount = 128>
-class QueTest : public WorkQueue<int, KObjectCount, Thread>
+class QueTest : public lfl::WorkQueue<int, KObjectCount, Thread>
 {
     public :
         int Pop(int *pData)
@@ -25,7 +26,7 @@ class QueTest : public WorkQueue<int, KObjectCount, Thread>
 TEST(WorkQueue, PushBack)
 {
     QueTest<> que;
-    EXPECT_EQ(0, que.Init(WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
+    EXPECT_EQ(0, que.Init(lfl::WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
 
     constexpr int countItem = 10;
     for (int i = 0; i < countItem; ++i)
@@ -42,7 +43,7 @@ TEST(WorkQueue, PushFresh)
 {
     QueTest que;
     que._sleepInt = 50;
-    EXPECT_EQ(0, que.Init(WQ_QUEUE_STATE::WORKING, "PushFreshTestLF"));
+    EXPECT_EQ(0, que.Init(lfl::WQ_QUEUE_STATE::WORKING, "PushFreshTestLF"));
 
     int i = 1;
     que.PushFresh(i);
@@ -60,7 +61,7 @@ TEST(WorkQueue, PushFresh)
 TEST(WorkQueue, PushBackTh)
 {
     QueTest<128> que;
-    EXPECT_EQ(0, que.Init(WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
+    EXPECT_EQ(0, que.Init(lfl::WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
 
     constexpr int countTh   =  4;
     constexpr int countItem = 32;
@@ -105,7 +106,7 @@ TEST(WorkQueue, PushBackTh)
 TEST(WorkQueue, PushBackTh2)
 {
     QueTest<64> que;
-    EXPECT_EQ(0, que.Init(WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
+    EXPECT_EQ(0, que.Init(lfl::WQ_QUEUE_STATE::WORKING, "PushBackTestLF"));
 
     constexpr int countTh   =  4;
     constexpr int countItem = 32;

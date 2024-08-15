@@ -21,6 +21,9 @@
 #include <iostream>
 
 
+namespace LockFreeLib
+{
+
 
 /**
  * @brief
@@ -589,6 +592,7 @@ void WorkQueuePool<TObject, KObjectCount, TThread>::End()
 }
 
 
+} // namespace LockFreeLib
 
 
 #endif // __WORK_QUEUE_H__

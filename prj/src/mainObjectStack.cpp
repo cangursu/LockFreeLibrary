@@ -4,12 +4,15 @@
 
 #include <iostream>
 
+namespace lfl=LockFreeLib;
+
+
 void main_ObjectStack_1()
 {
     //Error checks have been suppressed.
 
 
-    ObjectStack<int, 4> stc;
+    lfl::ObjectStack<int, 4> stc;
     stc.Push(-1);
 
     int val;
@@ -41,7 +44,7 @@ void main_ObjectStack_2()
     //Error checks have been suppressed.
 
 
-    ObjectStack<int, 4> stc;
+    lfl::ObjectStack<int, 4> stc;
     stc.Push(-1);
 
     int val;

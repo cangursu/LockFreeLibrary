@@ -5,28 +5,29 @@
 #include <iostream>
 #include <unistd.h>
 
+namespace lfl=LockFreeLib;
 
 
 void main_ObjectQueue_1()
 {
-    ObjectQueue<int, 4> queue;
+    lfl::ObjectQueue<int, 4> queue;
 
     std::cout << "Stat\n";
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     std::cout << "PushBack\n";
     bool b = false;
     b = queue.PushBack(-1);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-2);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-3);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
 
     std::cout << "Pop\n";
@@ -34,15 +35,15 @@ void main_ObjectQueue_1()
     int val = 0;
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 }
 
 
@@ -50,32 +51,32 @@ void main_ObjectQueue_1()
 
 void main_ObjectQueue_2()
 {
-    ObjectQueue<int, 4> queue;
+    lfl::ObjectQueue<int, 4> queue;
 
     std::cout << "Stat\n";
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     std::cout << "PushBack\n";
     bool b = false;
     b = queue.PushBack(-1);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-2);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-3);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-4);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.PushBack(-5);
     std::cout << "b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
 
     std::cout << "Pop\n";
@@ -83,57 +84,57 @@ void main_ObjectQueue_2()
     int val = 0;
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     std::cout << "PushBack\n";
     queue.PushBack(-6);
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
     queue.PushBack(-7);
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
     queue.PushBack(-8);
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
     queue.PushBack(-9);
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
     queue.PushBack(-10);
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
 
     std::cout << "Pop\n";
     b = queue.Pop(val);
     std::cout << "val  : " << val << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val  << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 
     b = queue.Pop(val);
     std::cout << "val  : " << val << ", b  : " << (b?"true":"false") << std::endl;
-    std::cout << ::to_string(queue) << std::endl;
+    std::cout << lfl::to_string(queue) << std::endl;
 }
 
 
@@ -156,15 +157,15 @@ static void ResetVal(int64_t v [g_lenTh][g_lenPush])
 
 struct Prm
 {
-    int                         _idx = 0;
-    ObjectQueue<int64_t, g_lenQue> * _queue = nullptr;
+    int _idx = 0;
+    lfl::ObjectQueue<int64_t, g_lenQue> * _queue = nullptr;
 };
 
 
 static void *Produce(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
 
     for (int i = 0; i < g_lenPush; ++i )
     {
@@ -181,7 +182,7 @@ static void *Produce(void *p)
 static void *Consume(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> *queue = prm->_queue;
 
     for (int i = 0; i < g_lenPush; ++i )
     {
@@ -212,7 +213,7 @@ void main_ObjectQueue_3()
     srand(time(nullptr));
     ResetVal(g_val);
 
-    ObjectQueue<int64_t, g_lenQue> queue;
+    lfl::ObjectQueue<int64_t, g_lenQue> queue;
     Prm       prm[g_lenTh];
     pthread_t thProd[g_lenTh] {};
     pthread_t thCons[g_lenTh] {};

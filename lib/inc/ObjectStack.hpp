@@ -7,6 +7,8 @@
 #include <cstddef>
 
 
+namespace LockFreeLib
+{
 
 
 /**
@@ -102,6 +104,8 @@ void ObjectStack<TObject, KObjectCount>::Reset()
     _idx.store(0, std::memory_order_release);
 }
 
+
+} // namespace LockFreeLib
 
 
 #endif // __OBJECT_STACK_HPP__

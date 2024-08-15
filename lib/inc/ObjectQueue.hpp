@@ -12,6 +12,10 @@
 #include <iostream>
 
 
+namespace LockFreeLib
+{
+
+
 template <typename TObject, std::size_t KObjectCount>
 class ObjectQueue;
 
@@ -177,6 +181,9 @@ void ObjectQueue<TObject, KObjectCount>::Reset()
     for (std::size_t i = 0; i != KObjectCount; i += 1)
         _buffer[i]._seq.store(i, std::memory_order_relaxed);
 }
+
+
+} // namespace LockFreeLib
 
 
 #endif // __OBJECT_QUEUE_HPP__

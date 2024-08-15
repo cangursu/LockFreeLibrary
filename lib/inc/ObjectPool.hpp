@@ -14,8 +14,11 @@
 //#define  LLOG_ERROR if(false) std::cout
 
 
-using ParamList  = std::map<std::string, std::string>;
+namespace LockFreeLib
+{
 
+
+using ParamList  = std::map<std::string, std::string>;
 
 /**
  * @brief ObjectPoolItem
@@ -293,6 +296,9 @@ const TObject& ObjectPoolLock<TObject, KObjectCount>::operator *() const
 {
     return get();
 }
+
+
+} // namespace LockFreeLib
 
 
 #endif // __OBJECT_POOL_HPP__

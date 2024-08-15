@@ -10,6 +10,8 @@
 //#define LOG std::cout
 #define LOG if(false) std::cout
 
+namespace lfl=LockFreeLib;
+
 class ObjectTest
 {
     public:
@@ -35,28 +37,28 @@ std::atomic<int> ObjectTest::_countTotalNotAquired  = 0;
 
 TEST(ObjectPool, Basic)
 {
-    ObjectPool<ObjectTest, 4> pool;
+    lfl::ObjectPool<ObjectTest, 4> pool;
 
     EXPECT_TRUE(pool.Init());
 
-    ObjectPoolItem<ObjectTest> *item1 = pool.ObjectAcquire();
+    lfl::ObjectPoolItem<ObjectTest> *item1 = pool.ObjectAcquire();
     EXPECT_NE(nullptr, item1);
     item1->Obj()._val = 1;
 
-    ObjectPoolItem<ObjectTest> *item2 = pool.ObjectAcquire();
+    lfl::ObjectPoolItem<ObjectTest> *item2 = pool.ObjectAcquire();
     EXPECT_NE(nullptr, item2);
     item2->Obj()._val = 2;
 
-    ObjectPoolItem<ObjectTest> *item3 = pool.ObjectAcquire();
+    lfl::ObjectPoolItem<ObjectTest> *item3 = pool.ObjectAcquire();
     EXPECT_NE(nullptr, item3);
     item3->Obj()._val = 3;
 
-    ObjectPoolItem<ObjectTest> *item4 = pool.ObjectAcquire();
+    lfl::ObjectPoolItem<ObjectTest> *item4 = pool.ObjectAcquire();
     EXPECT_NE(nullptr, item4);
     item4->Obj()._val = 4;
 
 
-    ObjectPoolItem<ObjectTest> *item = nullptr;
+    lfl::ObjectPoolItem<ObjectTest> *item = nullptr;
     item = pool.ObjectAcquire();
     EXPECT_EQ(nullptr, item);
 
@@ -94,7 +96,7 @@ TEST(ObjectPool, Basic)
 
 static constexpr int        g_lenPoolTest  = 16;
 
-using PoolTest = ObjectPool<ObjectTest, g_lenPoolTest>;
+using PoolTest = lfl::ObjectPool<ObjectTest, g_lenPoolTest>;
 
 
 struct Prm
@@ -116,7 +118,7 @@ static void *ThLimited(void *p)
         EXPECT_LE(0,                ObjectTest::_countCurAquired.load(std::memory_order_seq_cst));
         EXPECT_GE(prm->_lenPool,    ObjectTest::_countCurAquired.load(std::memory_order_seq_cst));
 
-        ObjectPoolItem<ObjectTest> *pObj = pool->ObjectAcquire();
+        lfl::ObjectPoolItem<ObjectTest> *pObj = pool->ObjectAcquire();
         EXPECT_NE(nullptr, pObj);
 
         ++ObjectTest::_countCurAquired;
@@ -143,7 +145,7 @@ static void *ThUnlimited(void *p)
         EXPECT_LE(0,                ObjectTest::_countCurAquired.load(std::memory_order_seq_cst));
         EXPECT_GE(prm->_lenPool,    ObjectTest::_countCurAquired.load(std::memory_order_seq_cst));
 
-        ObjectPoolItem<ObjectTest> *pObj = pool->ObjectAcquire();
+        lfl::ObjectPoolItem<ObjectTest> *pObj = pool->ObjectAcquire();
         if (nullptr == pObj)
         {
             ++ObjectTest::_countTotalNotAquired;

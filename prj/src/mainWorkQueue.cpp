@@ -2,9 +2,10 @@
 #include "WorkQueue.hpp"
 #include "TimeFrame.h"
 
+namespace lfl=LockFreeLib;
 
 
-class MyQue : public WorkQueue<int, 4, Thread>
+class MyQue : public lfl::WorkQueue<int, 4, Thread>
 {
     public:
         int Pop(int *pData)
@@ -28,7 +29,7 @@ void MainWorkQueue_1()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 
     MyQue que;
-    que.Init(WQ_QUEUE_STATE::WORKING, "MainPushBack");
+    que.Init(lfl::WQ_QUEUE_STATE::WORKING, "MainPushBack");
 
     for (int i = 0; i < 1000; ++i)
     {
@@ -48,7 +49,7 @@ void MainWorkQueue_2()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 
     MyQue que;
-    que.Init(WQ_QUEUE_STATE::WORKING, "MainPushFresh");
+    que.Init(lfl::WQ_QUEUE_STATE::WORKING, "MainPushFresh");
     que._sleepInt = 10;
 
     int i = 1;
@@ -69,7 +70,7 @@ void MainWorkQueue_3()
     srand(time(nullptr));
 
     MyQue que;
-    que.Init(WQ_QUEUE_STATE::WORKING, "MainPushBackTH");
+    que.Init(lfl::WQ_QUEUE_STATE::WORKING, "MainPushBackTH");
 
     constexpr int countTh   = 4;
     constexpr int countItem = 32;

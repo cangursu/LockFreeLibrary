@@ -9,9 +9,12 @@
 //#define LOG std::cout
 #define LOG if(false) std::cout
 
+namespace lfl=LockFreeLib;
+
+
 TEST(ObjectStack, Basic)
 {
-    ObjectStack<int, 4> stc;
+    lfl::ObjectStack<int, 4> stc;
 
     EXPECT_NE(-1, stc.Push(-1));
 
@@ -51,7 +54,7 @@ static std::list<TestType>  g_valsPoped;
 
 struct Prm
 {
-    ObjectStack<TestType, g_lenStack> *_stack = nullptr;
+    lfl::ObjectStack<TestType, g_lenStack> *_stack = nullptr;
     std::mutex *_lock  = nullptr;
     int         _idxTh = 0;
 };
@@ -60,7 +63,7 @@ struct Prm
 static void *Produce(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectStack<TestType, g_lenStack>* stack = prm->_stack;
+    lfl::ObjectStack<TestType, g_lenStack>* stack = prm->_stack;
 
     for (int idxPush = 0; idxPush < g_lenPush; ++idxPush)
     {
@@ -87,7 +90,7 @@ static void *Produce(void *p)
 static void *Consume(void *p)
 {
     Prm *prm = (Prm *)p;
-    ObjectStack<TestType, g_lenStack>* stack = prm->_stack;
+    lfl::ObjectStack<TestType, g_lenStack>* stack = prm->_stack;
 
     for (int idxPop = 0; idxPop < g_lenPush; ++idxPop )
     {
@@ -120,7 +123,7 @@ static void *Consume(void *p)
 
 TEST(ObjectStack, MT)
 {
-    ObjectStack<TestType, g_lenStack> stack;
+    lfl::ObjectStack<TestType, g_lenStack> stack;
     std::mutex                        lock;
 
     Prm       prm[g_lenTh];

@@ -4,7 +4,7 @@
 
 #include "WorkQueue.hpp"
 
-std::string WQ_QUEUE_STATE_text(WQ_QUEUE_STATE value)
+std::string LockFreeLib::WQ_QUEUE_STATE_text(LockFreeLib::WQ_QUEUE_STATE value)
 {
     switch (value)
     {
